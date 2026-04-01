@@ -1,0 +1,1718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HospoAI — Photo Upgrade Prompts</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F0EDE6;
+    --dark: #1C1B19;
+    --mid: #4A4844;
+    --accent: #C8A96E;
+    --warm: #E8DFD0;
+    --red: #C0392B;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--cream);
+    color: var(--dark);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+  }
+
+  /* ─── HEADER ─── */
+  header {
+    background: var(--dark);
+    padding: 3rem 2rem 2.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 40px,
+      rgba(200,169,110,0.04) 40px,
+      rgba(200,169,110,0.04) 41px
+    );
+  }
+
+  .brand {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    position: relative;
+  }
+
+  header h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 8vw, 6rem);
+    color: var(--cream);
+    letter-spacing: 0.04em;
+    line-height: 0.9;
+    margin-bottom: 0.5rem;
+    position: relative;
+  }
+
+  .header-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.4rem;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    position: relative;
+    transition: opacity 0.2s;
+  }
+
+  header p {
+    color: rgba(240,237,230,0.5);
+    font-size: 0.82rem;
+    letter-spacing: 0.08em;
+    max-width: 400px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  /* ─── PACK SWITCHER ─── */
+  .pack-bar {
+    background: var(--dark);
+    border-top: 1px solid rgba(200,169,110,0.15);
+    padding: 0 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 0;
+  }
+
+  .pack-tab {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(240,237,230,0.4);
+    padding: 0.9rem 1.6rem;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .pack-tab:hover { color: rgba(240,237,230,0.75); }
+
+  .pack-tab.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+    font-weight: 500;
+  }
+
+  /* ─── EXPORT BAR ─── */
+  .export-bar {
+    background: var(--warm);
+    border-bottom: 1px solid rgba(28,27,25,0.1);
+    padding: 1.2rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 20px rgba(28,27,25,0.08);
+  }
+
+  .export-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--mid);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .export-options {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .export-btn {
+    padding: 0.4rem 0.9rem;
+    border: 1.5px solid rgba(28,27,25,0.2);
+    background: transparent;
+    border-radius: 2px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    color: var(--mid);
+    transition: all 0.2s;
+  }
+
+  .export-btn:hover { border-color: var(--accent); color: var(--dark); }
+  .export-btn.active {
+    background: var(--dark);
+    border-color: var(--dark);
+    color: var(--cream);
+  }
+
+  .export-hint {
+    font-size: 0.7rem;
+    color: rgba(74,72,68,0.5);
+    margin-left: auto;
+    font-style: italic;
+  }
+
+  /* ─── MAIN ─── */
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 5rem;
+  }
+
+  /* ─── SECTION TITLES ─── */
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 3.5rem 0 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(200,169,110,0.3);
+  }
+
+  /* ─── HOW IT WORKS ─── */
+  .how-it-works {
+    background: var(--dark);
+    border-radius: 3px;
+    padding: 2.5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .step { display: flex; flex-direction: column; gap: 0.6rem; }
+
+  .step-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    color: var(--accent);
+    line-height: 1;
+    opacity: 0.6;
+  }
+
+  .step-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.1em;
+    color: var(--cream);
+  }
+
+  .step-text {
+    font-size: 0.78rem;
+    line-height: 1.6;
+    color: rgba(240,237,230,0.5);
+  }
+
+  /* ─── PROMPT GRID ─── */
+  .prompt-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+
+  /* ─── PROMPT CARDS ─── */
+  .prompt-card {
+    background: white;
+    border: 1px solid rgba(28,27,25,0.08);
+    border-radius: 3px;
+    overflow: hidden;
+    transition: box-shadow 0.3s, transform 0.2s;
+    position: relative;
+  }
+
+  .prompt-card:hover {
+    box-shadow: 0 8px 40px rgba(28,27,25,0.12);
+    transform: translateY(-2px);
+  }
+
+  .card-header {
+    padding: 1.4rem 1.4rem 1rem;
+    border-bottom: 1px solid rgba(28,27,25,0.06);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .card-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    color: var(--dark);
+  }
+
+  .card-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.85rem;
+    color: var(--mid);
+    margin-top: 0.2rem;
+  }
+
+  .card-tag {
+    background: var(--warm);
+    padding: 0.25rem 0.6rem;
+    border-radius: 2px;
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--mid);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .card-body { padding: 1rem 1.4rem; }
+
+  .prompt-preview {
+    font-size: 0.78rem;
+    line-height: 1.6;
+    color: var(--mid);
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 1rem;
+  }
+
+  /* ─── HERO INPUT ─── */
+  .hero-input-wrap { margin-bottom: 1rem; }
+
+  .hero-input-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--mid);
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+
+  .hero-input {
+    width: 100%;
+    padding: 0.55rem 0.8rem;
+    border: 1.5px solid rgba(28,27,25,0.15);
+    border-radius: 2px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    color: var(--dark);
+    background: var(--cream);
+    transition: border-color 0.2s;
+    outline: none;
+  }
+
+  .hero-input:focus { border-color: var(--accent); background: white; }
+  .hero-input::placeholder { color: rgba(74,72,68,0.4); }
+
+  /* ─── COPY BUTTON ─── */
+  .copy-btn {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: var(--dark);
+    color: var(--cream);
+    border: none;
+    border-radius: 2px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .copy-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--accent);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  .copy-btn:hover::before { transform: translateX(0); }
+  .copy-btn span { position: relative; z-index: 1; }
+  .copy-btn svg { position: relative; z-index: 1; transition: transform 0.2s; }
+  .copy-btn:hover svg { transform: scale(1.1); }
+  .copy-btn.copied { background: #2D6A4F; }
+  .copy-btn.copied::before { transform: translateX(0); background: #2D6A4F; }
+
+  /* ─── EXPAND BUTTON ─── */
+  .expand-btn {
+    width: 100%;
+    padding: 0.5rem;
+    background: transparent;
+    border: none;
+    border-top: 1px solid rgba(28,27,25,0.06);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(74,72,68,0.5);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    transition: color 0.2s;
+  }
+
+  .expand-btn:hover { color: var(--dark); }
+  .expand-btn svg { transition: transform 0.3s; }
+  .expand-btn.open svg { transform: rotate(180deg); }
+
+  .full-prompt {
+    display: none;
+    padding: 1rem 1.4rem;
+    border-top: 1px solid rgba(28,27,25,0.06);
+    background: rgba(240,237,230,0.5);
+    font-size: 0.75rem;
+    line-height: 1.7;
+    color: var(--mid);
+    white-space: pre-wrap;
+    font-family: 'DM Sans', sans-serif;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+
+  .full-prompt::-webkit-scrollbar { width: 3px; }
+  .full-prompt::-webkit-scrollbar-track { background: transparent; }
+  .full-prompt::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+
+  /* ─── TOAST ─── */
+  .toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--dark);
+    color: var(--cream);
+    padding: 0.8rem 1.5rem;
+    border-radius: 2px;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    border-left: 3px solid var(--accent);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 1000;
+    white-space: nowrap;
+  }
+
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  @media (max-width: 600px) {
+    .export-bar { padding: 1rem; gap: 0.8rem; }
+    .export-hint { display: none; }
+    .how-it-works { padding: 1.5rem; }
+    .pack-tab { padding: 0.9rem 1rem; font-size: 0.62rem; letter-spacing: 0.1em; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">the service edit</div>
+  <h1>Hospitality<br>Photo Upgrade<br>Prompts</h1>
+  <div class="header-subtitle" id="headerSubtitle">DSLR Natural</div>
+  <p>Select a pack below — copy any prompt and paste into ChatGPT with your photo</p>
+</header>
+
+<div class="pack-bar">
+  <button class="pack-tab active" data-pack="natural" onclick="switchPack('natural')">DSLR Natural</button>
+  <button class="pack-tab" data-pack="flash" onclick="switchPack('flash')">DSLR Hard Flash</button>
+  <button class="pack-tab" data-pack="hotel" onclick="switchPack('hotel')">Hotel Pack</button>
+</div>
+
+<div class="export-bar">
+  <span class="export-label">Export for:</span>
+  <div class="export-options" id="exportOptions">
+    <button class="export-btn active" data-export="instagram">Instagram Post</button>
+    <button class="export-btn" data-export="reel">Reel / Story</button>
+    <button class="export-btn" data-export="ad">Ad (1:1)</button>
+    <button class="export-btn" data-export="website">Website</button>
+    <button class="export-btn" data-export="none">No Export</button>
+  </div>
+  <span class="export-hint">Export prompt auto-appended ↑</span>
+</div>
+
+<main>
+  <div class="section-title">How It Works</div>
+  <div class="how-it-works" id="howItWorks"></div>
+  <div class="section-title" id="promptsTitle">Core Prompts</div>
+  <div class="prompt-grid" id="promptGrid"></div>
+</main>
+
+<div class="toast" id="toast">✓ Prompt copied to clipboard</div>
+
+<script>
+const CONSISTENCY_BOOST = `
+
+CONSISTENCY LOCK (APPLY TO ALL EDITS)
+- Every single edit must produce a result that looks like the SAME physical photograph
+- Same scene, same camera position, same framing, same crop
+- No random variation between attempts — one stable optical result
+- If AI attempts to "improve" the scene layout: REJECT and retry
+- If AI alters any non-flash element: REJECT and retry`;
+
+const EXPORT_PROMPTS = {
+  natural: {
+    instagram: "Export as 4:5 portrait (Instagram feed). Export as a high-resolution editorial image with print-safe contrast and natural colour accuracy. No key details cut off.",
+    reel:      "Export as 9:16 vertical (Reel/Story). Export as a high-resolution editorial image with print-safe contrast and natural colour accuracy. No key details cut off.",
+    ad:        "Export as 1:1. Leave clear negative space for ad text. Keep the hero subject slightly off-centre with safe margins. Export as a high-resolution editorial image with print-safe contrast and natural colour accuracy. No key details cut off.",
+    website:   "Export as high-resolution website-ready files. Provide 16:9 (hero banner crop). Export as a high-resolution editorial image with print-safe contrast and natural colour accuracy. No key details cut off.",
+    none: ""
+  },
+  flash: {
+    instagram: "Export as 4:5 portrait (Instagram feed). Export as a high-resolution editorial image with print-safe contrast and natural colour accuracy. No key details cut off.",
+    reel:      "Export as 9:16 vertical (Reel/Story). Export as a high-resolution editorial image with print-safe contrast and natural colour accuracy. No key details cut off.",
+    ad:        "Export as 1:1. Leave clear negative space for ad text. Keep the hero subject slightly off-centre with safe margins.",
+    website:   "Export as high-resolution website-ready files. Provide 16:9 (hero banner crop).",
+    none: ""
+  },
+  hotel: {
+    instagram: "EXPORT: Instagram post\nExport as 4:5 portrait (Instagram feed). Centre the hero subject and ensure it fills the frame. No key details cut off.",
+    reel:      "EXPORT: Instagram Reel\nExport as 9:16 vertical (Reel/Story). Keep the hero subject inside the centre safe zone. Leave breathing room at top and bottom.",
+    ad:        "EXPORT: Ad\nExport as 1:1. Leave clear negative space for ad text. Keep the hero subject slightly off-centre with safe margins.",
+    website:   "EXPORT: Website\nExport as high-resolution website-ready file. Provide 16:9 (hero banner crop). Keep colour true-to-life and avoid heavy contrast.",
+    none: ""
+  }
+};
+
+const PACKS = {
+  natural: {
+    subtitle: "DSLR Natural",
+    promptsTitle: "Core Prompts",
+    steps: [
+      { num: "01", title: "Take Your Photo",  text: "Shoot your food, drink, or venue photo as normal. Ensure it's in JPEG format." },
+      { num: "02", title: "Open ChatGPT",     text: "Upload your image directly into the ChatGPT chat window." },
+      { num: "03", title: "Copy a Prompt",    text: "Click the copy button below, fill in your hero product, then paste." },
+      { num: "04", title: "Export",           text: "Select your export format above — it's automatically added to every prompt." },
+    ],
+    prompts: [
+      {
+        id: "nat-basic", title: "BASIC", subtitle: "The all-purpose foundation", tag: "Start here",
+        hasHero: false,
+        description: "Rework the uploaded image into a professional DSLR optical realism edit.",
+        prompt: `Rework the uploaded image into a professional DSLR optical realism edit.
+- Prioritise tack-sharp focus on the main subject.
+- Add a subtle, natural optical background blur (bokeh) (lens-based only).
+- The scene must remain 100% identical - no changes to objects, food, drinks, plates, cutlery, table, or background.
+- This is an optical realism edit only (lens + sensor rendering), not a redesign.
+
+NEGATIVE PROMPT (NON-NEGOTIABLE LOCKS)
+ENVIRONMENT + SCENE LOCK (CRITICAL)
+- Do NOT change the environment, location, background, surfaces, or setting
+- Do NOT replace interiors, furniture, décor, plates, glassware, packaging, or props
+- Do NOT change lighting direction, time-of-day feel, ambience, or mood
+- Do NOT change colour temperature or overall natural light character
+- Do NOT remove real mess, clutter, imperfections, or texture
+
+SUBJECT IDENTITY LOCK
+- Do NOT change the main subject in any way
+- Do NOT alter shape, size, proportions, scale, angle, or placement
+- Do NOT change colour, texture, material, branding, labels, logos, or typography
+- Do NOT add/remove ingredients, components, garnish, liquid, steam, crumbs, etc.
+- Do NOT "perfect", tidy, restyle, or beautify the subject
+
+NO OBJECT CHANGES
+- Do NOT add/remove objects, people, hands, utensils, plates, napkins, packaging, or background elements
+- Do NOT invent new details
+- Do NOT clone, patch, erase, fill, or regenerate any missing areas
+
+NO RETOUCH / NO AI LOOK
+- No stylising (no cinematic, film, moody grade, vintage filters unless requested)
+- No CGI / 3D render look
+- No illustration / cartoon / painterly styles
+- No smoothing, retouching, reshaping, symmetry correction
+- No whitening, fake "shine," plastic textures, or polish effects
+- No HDR, no heavy contrast, no heavy saturation
+
+NO FAKE DEPTH OF FIELD
+- No cut-out edges / masking artefacts
+- No haloing around subjects
+- No pasted-on blur layers or artificial masking
+- No over-sharpening or crunchy micro-contrast
+
+ONLY ALLOWED CHANGES
+- Lens optics only (true depth of field, natural bokeh falloff, focal rendering)
+- Sensor rendering only (dynamic range, highlight roll-off, tonal subtlety, clean detail)
+- Everything else must remain identical to the original image`,
+      },
+      {
+        id: "nat-flatlay", title: "FLATLAY", subtitle: "90° overhead table spread", tag: "Top-down",
+        hasHero: false,
+        description: "Rework into a professional DSLR overhead flat-lay table spread (true top-down food editorial).",
+        prompt: `Rework the uploaded image into a professional DSLR overhead flat-lay table spread (true top-down food editorial).
+Reframe to a natural 90° top-down perspective with subtle, realistic perspective correction only.
+Maintain clean sharp focus across key elements, with subtle optical depth where appropriate (lens-based only).
+Preserve true-to-life colour, clean highlights, and natural contrast.
+The scene must remain 100% identical — no redesign.
+This is an optical realism edit only (lens + sensor rendering).
+
+NON-NEGOTIABLE LOCKS
+ENVIRONMENT + SCENE
+- Do NOT change the environment, location, background, surfaces, furniture, décor, or table elements.
+- Do NOT change lighting direction, time-of-day feel, ambience, colour temperature, or natural light character.
+- Do NOT remove real mess, clutter, crumbs, imperfections, texture, scratches, or stains.
+
+SUBJECT IDENTITY (FULL TABLE SPREAD)
+- Do NOT change any items in the spread.
+- No changes to shape, size, proportions, scale, angle, placement, spacing, colours, materials, packaging, labels, logos, glassware, plates, or cutlery.
+- Do NOT add/remove ingredients, garnishes, liquids, steam, crumbs, etc.
+- Do NOT tidy, perfect, restyle, rebalance, or food-style anything.
+
+OBJECTS
+- Do NOT add, remove, replace, invent, clone, patch, erase, AI-fill, or regenerate any objects, people, hands, utensils, napkins, packaging, or background elements.
+
+NO RETOUCH / NO AI LOOK
+- No stylising (cinematic, film, moody, vintage).
+- No CGI, 3D, illustration, painterly effects.
+- No smoothing, beauty retouching, plastic textures, HDR, heavy contrast, heavy saturation, or colour pop.
+
+DEPTH OF FIELD RULES
+- Optical blur only (true lens behaviour).
+- No masking artefacts, haloing, cut-outs, pasted blur, over-sharpening, or crunchy micro-contrast.`,
+      },
+      {
+        id: "nat-product", title: "PRODUCT SPECIFIC", subtitle: "Hero product close-up", tag: "Single item",
+        hasHero: true, heroLabel: "Hero Product", heroPlaceholder: "e.g. Wagyu beef, Margarita...",
+        description: "Rework into a professional DSLR hero product shot with tight cropping.",
+        prompt: `Rework the uploaded image into a professional DSLR hero product shot for [HERO_PRODUCT].
+Prioritise tack-sharp focus on the product with subtle, natural optical depth of field (true lens-based bokeh only).
+Crop tightly to feature only the hero product, removing all other elements by cropping only (no object removal).
+This is an optical realism edit only (lens + sensor rendering) — no redesign.
+Everything else must remain 100% identical to the original image.
+
+NON-NEGOTIABLE LOCKS
+ENVIRONMENT + SCENE
+- Do NOT change the environment, table, background, surfaces, lighting direction, ambience, props, packaging, plates, glassware, or décor.
+
+SUBJECT IDENTITY
+- Do NOT change the hero product in any way.
+- No changes to shape, size, proportions, scale, angle, placement, colour, texture, branding, labels, logos, or typography.
+- Do NOT add/remove ingredients, crumbs, liquid, steam, garnish, or details.
+- Do NOT tidy, clean, restyle, or "perfect" the product.
+
+CROP ONLY
+- Remove unwanted elements only by cropping.
+- No object removal, AI-fill, cloning, patching, reconstruction, or invented edges, reflections, shadows, or background detail.
+
+DEPTH OF FIELD RULES
+- Optical blur only — no masking artefacts, haloing, pasted blur, over-sharpening, or crunchy micro-contrast.
+
+NO AI LOOK
+- No stylising, filters, HDR, heavy contrast/saturation, smoothing, plastic shine, whitening, or polish.
+
+ONLY ALLOWED CHANGES
+- True lens optics (natural DOF + bokeh fall-off)
+- True sensor rendering (dynamic range, highlight roll-off, tonal subtlety, clean detail)
+- Everything else remains pixel-identical.`,
+      },
+      {
+        id: "nat-shallow", title: "SHALLOW DEPTH", subtitle: "Hero sharp, everything else blurred", tag: "Bokeh focus",
+        hasHero: true, heroLabel: "Hero Product / Dish", heroPlaceholder: "e.g. Pasta dish, Cocktail...",
+        description: "Make your hero the only tack-sharp element, with all other elements naturally out of focus.",
+        prompt: `Rework the uploaded image into a professional DSLR shallow depth-of-field optical realism edit.
+Make [HERO_PRODUCT] the only tack-sharp element, with all other elements rendered naturally out of focus using true lens-based bokeh (realistic depth fall-off + roll-off).
+The scene must remain 100% identical — no redesign.
+This is a lens + sensor rendering only edit.
+
+NON-NEGOTIABLE LOCKS
+SCENE + ENVIRONMENT
+- Do NOT change the environment, background, surfaces, props, plates, glassware, packaging, décor, or furniture.
+- Do NOT change lighting direction, time-of-day feel, ambience, colour temperature, or natural light character.
+- Do NOT remove real mess, clutter, imperfections, or texture.
+
+SUBJECT IDENTITY
+- Do NOT change [HERO_PRODUCT] in any way.
+- No changes to shape, size, proportions, scale, angle, placement, colour, texture, branding, labels, logos, or typography.
+- Do NOT add/remove ingredients, garnish, crumbs, liquid, steam, or details.
+- Do NOT tidy, clean, restyle, or "perfect" the subject.
+
+OBJECTS
+- Do NOT add, remove, replace, invent, clone, patch, erase, AI-fill, or regenerate any objects, utensils, hands, napkins, packaging, or background elements.
+
+BLUR RULES
+- Optical blur only — no cut-outs, masking artefacts, haloing, pasted blur, over-sharpening, or crunchy micro-contrast.
+
+NO AI LOOK
+- No stylising, cinematic or vintage grading, CGI/3D look, HDR, heavy contrast/saturation, smoothing, whitening, plastic shine, or polish.
+
+ONLY ALLOWED CHANGES
+- True lens optics (shallow DOF, realistic bokeh fall-off, focal rendering)
+- True sensor rendering (dynamic range, highlight roll-off, tonal subtlety, clean detail)
+- Everything else remains pixel-identical.`,
+      },
+      {
+        id: "nat-macro", title: "TIGHT MACRO", subtitle: "Extreme close-up with micro detail", tag: "100mm macro",
+        hasHero: true, heroLabel: "Main Subject", heroPlaceholder: "e.g. Wagyu marble, Bread crust...",
+        description: "Extreme tight macro so your subject fills the frame edge-to-edge with razor-sharp texture.",
+        prompt: `Rework the uploaded image into a professional DSLR macro hero shot with strong optical realism.
+Crop to an extreme tight macro so [HERO_PRODUCT] fills the frame edge-to-edge.
+Render razor-sharp micro-detail (true texture, fibres, pores, crumbs — realistic, not crunchy).
+Emulate a 100mm full-frame macro lens with very shallow depth of field:
+[HERO_PRODUCT] tack sharp, clean highlight roll-off, realistic reflections; background falls into creamy optical bokeh (lens-based only).
+This is an optical realism edit only (lens + sensor rendering) — no redesign.
+
+NON-NEGOTIABLE LOCKS
+ENVIRONMENT + SCENE
+- Do NOT change the environment, background, surfaces, props, plates, packaging, décor, lighting direction, ambience, time-of-day, colour temperature, or natural light character.
+- Do NOT remove real mess, crumbs, imperfections, scratches, or texture.
+
+SUBJECT IDENTITY
+- Do NOT change [HERO_PRODUCT] in any way.
+- No changes to shape, size, proportions, scale, angle, placement, colour, texture, material, branding, labels, logos, or typography.
+- Do NOT add/remove ingredients, garnish, liquid, steam, crumbs, oil, etc.
+- Do NOT tidy, perfect, restyle, or beautify.
+
+OBJECTS
+- Do NOT add, remove, replace, invent, clone, patch, erase, AI-fill, or regenerate any objects, hands, utensils, packaging, or background elements.
+
+MACRO + BLUR RULES
+- Optical blur only — no fake macro, masking artefacts, haloing, cut-outs, pasted blur, or AI-generated texture/detail.
+
+NO AI LOOK
+- No stylising, cinematic/film/vintage looks, CGI/3D, illustration, HDR, heavy saturation, plastic shine, over-sharpening, or crunchy micro-contrast.
+
+ONLY ALLOWED CHANGES
+- True lens optics (100mm macro rendering, shallow DOF, realistic bokeh fall-off)
+- True sensor rendering (dynamic range, highlight roll-off, tonal subtlety, clean detail)
+- Everything else remains pixel-identical.`,
+      },
+      {
+        id: "nat-environment", title: "ENVIRONMENT", subtitle: "Venue & interior shots", tag: "⚠ Faces: 1–2 only",
+        hasHero: false,
+        description: "Clean DSLR environment photo. Best with people facing away or in background.",
+        prompt: `Rework the uploaded image into a clean professional DSLR environment photo with strong optical realism.
+Keep the entire scene identical (same venue, background, objects, furniture, signage, layout).
+If people are present, their faces, likeness, identity, and body proportions must remain 100% unchanged.
+Improve lens + sensor rendering only (clean dynamic range, highlight roll-off, natural contrast, true-to-life colour).
+Maintain natural optical depth of field only (no artificial blur).
+This is an optical realism edit only — no redesign.
+
+NON-NEGOTIABLE LOCKS
+ENVIRONMENT + SCENE
+- Do NOT change the environment, location, background, surfaces, interiors, furniture, décor, tables, walls, floors, windows, plants, props, signage, text, branding, menus, labels, or typography.
+- Do NOT change layout, spacing, perspective, framing, lighting direction, time-of-day feel, ambience, mood, colour temperature, or natural light character.
+- Do NOT remove clutter, imperfections, texture, stains, scratches, reflections, or real mess.
+
+PEOPLE / IDENTITY
+- Do NOT change any person's face, likeness, identity, expression, skin texture, age, ethnicity, or defining features.
+- Do NOT change body proportions, posture, hands, fingers, hairstyle, makeup, tattoos, jewellery, clothing, logos, or uniform details.
+- No beautification or retouching (no smoothing, slimming, symmetry correction, whitening).
+
+OBJECTS
+- Do NOT add, remove, replace, invent, clone, patch, erase, AI-fill, or regenerate any objects, people, hands, drinks, plates, furniture, vehicles, or background elements.
+
+NO AI LOOK / NO FAKE DOF
+- No stylising (cinematic/film/vintage), CGI/3D, illustration, HDR, heavy contrast/saturation, plastic shine, or polish.
+- No masking artefacts, haloing, or pasted blur — optical lens behaviour only.
+
+ONLY ALLOWED CHANGES
+- True lens optics (natural focal rendering, subtle depth realism, perspective correctness)
+- True sensor rendering (dynamic range, highlight roll-off, tonal subtlety, clean detail)
+- Everything else remains pixel-identical.`,
+      },
+      {
+        id: "nat-menu-flatlay", title: "MENU FLATLAY", subtitle: "90° overhead single plate", tag: "Menu ready",
+        hasHero: true, heroLabel: "Main Product", heroPlaceholder: "e.g. Wagyu, Octopus dish...",
+        description: "Clean menu-ready flatlay, single plate centered and level. Crop only — no AI fill.",
+        prompt: `Rework the uploaded image into a clean MENU-READY DSLR flatlay for [HERO_PRODUCT] ONLY.
+- Convert camera angle into a true 90° top-down overhead flatlay (menu style).
+- Crop tightly so ONLY the plate is visible (remove everything else ONLY by cropping).
+- Plate must be centered, square, and level in frame.
+- Keep the plate on the same original table/background (NO cutout, NO studio background).
+- No background blur - full menu clarity across the entire plate.
+- This is an optical realism edit only (lens + sensor rendering), not a redesign.
+
+NEGATIVE PROMPT (NON-NEGOTIABLE LOCKS)
+SCENE + BACKGROUND LOCK
+- Do NOT change the table/background, texture, grain, tone, scratches, shadows, or imperfections
+- Do NOT cut out the plate or place it on white/studio background
+- Do NOT relight or change time-of-day / ambience
+- Do NOT change overall colour temperature
+
+SUBJECT / PLATE IDENTITY LOCK
+- Do NOT change the product, plate, or any details (shape, size, placement, colour, texture)
+- Do NOT add/remove anything (oil, crumbs, garnish, liquid, highlights, reflections)
+- Do NOT "tidy", clean up, restyle, or improve presentation
+
+CROP ONLY (NO AI FIXING)
+- Remove all unwanted elements ONLY by cropping
+- NO object removal, NO AI-fill, NO patching/painting, NO cloning, NO reconstruction
+
+NO AI LOOK
+- No stylising, no filters, no cinematic/film grade
+- No HDR, no heavy contrast, no oversaturation
+- No plastic shine, whitening, smoothing, or fake sharpening
+
+ONLY ALLOWED
+- True overhead perspective correction (flatlay geometry)
+- DSLR sensor rendering only (dynamic range, highlight roll-off, clean detail)
+- Even sharpness across the full plate (menu clarity)`,
+      },
+      {
+        id: "nat-menu-side", title: "MENU SIDE PROFILE", subtitle: "Straight-on side view", tag: "Menu ready",
+        hasHero: true, heroLabel: "Hero Subject", heroPlaceholder: "e.g. Cocktail, Burger, Wine...",
+        description: "True straight-on side profile. Perfect for drinks and tall subjects.",
+        prompt: `Rework the uploaded image into a clean MENU-READY DSLR side profile shot for [HERO_PRODUCT] ONLY.
+- Convert the camera angle into a true straight-on side profile (menu style), with vertical lines corrected (no leaning / no tilt).
+- Crop tightly so ONLY the hero subject + its plate/container are visible - remove everything else ONLY by cropping (no object removal).
+- Keep the subject centred, level, and perfectly upright in frame.
+- The subject must remain on the exact same original table/background (NO cutout, NO studio/white backdrop).
+- No heavy background blur - menu clarity required across the hero subject.
+- This is an optical realism edit only (lens + sensor rendering), not a redesign.
+
+NEGATIVE PROMPT
+ENVIRONMENT + SCENE LOCK (CRITICAL)
+- Do NOT change the environment, location, background, surfaces, or setting
+- Do NOT replace the table/background - must remain the original surface
+- Do NOT cut out the subject or place it on a studio/white background
+- Do NOT remove natural texture, grain, tone, or imperfections in the surface
+- Do NOT change lighting direction, time-of-day feel, ambience, or mood
+
+SUBJECT IDENTITY LOCK
+- Do NOT change the hero subject in any way
+- Do NOT alter shape, size, proportions, scale, angle, or placement
+- Do NOT change colour, texture, material, branding, labels, logos, or typography
+- Do NOT add/remove ingredients, components, garnish, crumbs, liquid, steam, etc.
+- Do NOT "perfect", tidy, restyle, or beautify the subject
+
+NO OBJECT CHANGES
+- Do NOT add/remove objects, utensils, hands, glassware, napkins, packaging, or background elements
+- Do NOT AI-fill or regenerate missing areas
+- Remove unwanted elements ONLY by cropping them out
+
+NO RETOUCH / NO AI LOOK
+- No stylising (no cinematic, film, moody grade, vintage filters)
+- No CGI / 3D render look
+- No HDR, no heavy contrast, no heavy saturation
+- No fake shine, whitening, or plastic "polish" look
+
+NO FAKE DEPTH OF FIELD
+- No cut-out edges / masking artefacts
+- No haloing around the plate
+- No artificial blur layers
+- No background blur (menu clarity required)
+
+ONLY ALLOWED CHANGES
+- Lens optics only (straight-on geometry correction, natural perspective)
+- Sensor rendering only (dynamic range, highlight roll-off, tonal subtlety, clean detail)
+- Clean menu clarity across the hero subject
+- Everything else must remain identical to the original image`,
+      },
+      {
+        id: "nat-menu-45", title: "MENU 45°", subtitle: "3/4 angle view", tag: "Menu ready",
+        hasHero: true, heroLabel: "Hero Subject", heroPlaceholder: "e.g. Focaccia, Dessert...",
+        description: "Classic 3/4 menu angle — not overhead, not side-on. Shows height and texture.",
+        prompt: `Rework the uploaded image into a clean MENU-READY DSLR 45° (3/4 angle) shot for [HERO_PRODUCT] ONLY.
+- Convert the camera angle into a true 45° / 3/4 menu angle (not overhead, not side-on).
+- Apply subtle perspective correction so the subject feels naturally shot at 45° (no distortion).
+- Crop tightly so ONLY the hero subject + its plate/container are visible - remove everything else ONLY by cropping (no object removal).
+- Keep the hero subject centred, level, and cleanly framed.
+- The subject must remain on the exact same original table/background (NO cutout, NO studio/white backdrop).
+- No heavy background blur - menu clarity required (subtle natural separation only).
+- This is an optical realism edit only (lens + sensor rendering), not a redesign.
+
+NEGATIVE PROMPT
+ENVIRONMENT + SCENE LOCK (CRITICAL)
+- Do NOT change the environment, location, background, surfaces, or setting
+- Do NOT replace the table/background - must remain the original surface
+- Do NOT cut out the subject or place it on a studio/white background
+
+SUBJECT IDENTITY LOCK
+- Do NOT change the hero subject in any way
+- Do NOT alter shape, size, proportions, scale, angle, or placement
+- Do NOT change colour, texture, material, branding, labels, logos, or typography
+- Do NOT add/remove ingredients, components, garnish, crumbs, liquid, steam, etc.
+
+NO OBJECT CHANGES
+- Do NOT add/remove objects, utensils, hands, glassware, napkins, packaging, or background elements
+- Do NOT AI-fill or regenerate missing areas
+- Remove unwanted elements ONLY by cropping them out
+
+NO RETOUCH / NO AI LOOK
+- No stylising (no cinematic, film, moody grade, vintage filters)
+- No CGI / 3D render look
+- No HDR, no heavy contrast, no heavy saturation
+
+NO FAKE DEPTH OF FIELD
+- No cut-out edges / masking artefacts / No haloing / No background blur
+
+ONLY ALLOWED CHANGES
+- Lens optics only (true 45° perspective correction, natural geometry)
+- Sensor rendering only (dynamic range, highlight roll-off, tonal subtlety, clean detail)
+- Clean menu clarity across the hero subject
+- Everything else must remain identical to the original image`,
+      },
+    ],
+  },
+
+  flash: {
+    subtitle: "DSLR Hard Flash",
+    promptsTitle: "Hard Flash Prompts",
+    steps: [
+      { num: "01", title: "Take Your Photo",  text: "Shoot your food, drink, or venue photo as normal. JPEG format recommended." },
+      { num: "02", title: "Open ChatGPT",     text: "Upload your image directly into the ChatGPT chat window." },
+      { num: "03", title: "Copy a Prompt",    text: "Select a prompt, fill in your hero product if needed, then copy and paste." },
+      { num: "04", title: "Export",           text: "Select your export format above — it's automatically added to every prompt." },
+    ],
+    prompts: [
+      {
+        id: "fl-basic", title: "BASIC", subtitle: "All-purpose hard flash foundation", tag: "Start here",
+        hasHero: false,
+        description: "The core hard flash edit. Direct on-camera flash physics — strong specular highlights, hard-edged shadows, realistic flash fall-off. Scene stays 100% identical.",
+        prompt: `DSLR HARD FLASH OPTICAL REALISM
+Rework the uploaded image into a professional DSLR hard-flash optical realism edit.
+Flash + lens + sensor rendering ONLY — NOT a redesign. Scene stays 100% identical.
+
+HARD FLASH LIGHTING LOCK
+- Direct on-camera flash from lens position
+- Flash dominates ambient light (foreground bright → background darker)
+- Strong specular highlights on glossy/wet/oily surfaces (sauce, ceramic, glaze)
+- Hard-edged shadows, short length (flash close to lens)
+- No softbox / No bounce fill / No ambient-dominant lighting
+- No cinematic lighting / No fake vignette
+
+SCENE + SUBJECT LOCK (ABSOLUTE)
+- Do NOT change environment, background, surface, layout, or framing
+- Do NOT alter plates, glassware, props, or materials
+- Do NOT change shape, size, texture, moisture, or placement of any subject
+- Do NOT clean, beautify, add, remove, or alter any ingredients
+- Do NOT clone, erase, fill, or AI-reconstruct any area
+
+DEPTH OF FIELD
+- 35–85mm lens character, f/1.8–f/2.8 look
+- Progressive optical blur only where depth genuinely increases
+- No portrait-mode blur / No masking / No edge halos
+
+OPTICAL REALISM (ZERO TOLERANCE)
+- True-to-life colour (flash-driven) / Natural sensor contrast
+- Clean highlight roll-off / No HDR / No plastic textures / No stylisation` + CONSISTENCY_BOOST,
+      },
+      {
+        id: "fl-flatlay", title: "FLATLAY", subtitle: "90° overhead with hard flash", tag: "Top-down",
+        hasHero: true, heroLabel: "Hero Product", heroPlaceholder: "e.g. Wagyu beef, Margarita...",
+        description: "True 90° overhead flatlay with direct on-camera hard flash. Crisp specular highlights, sharp shadow footprint, realistic flash fall-off.",
+        prompt: `DSLR OVERHEAD FLAT-LAY — HARD FLASH
+Rework the uploaded image into a DSLR OVERHEAD FLAT-LAY hard flash optical realism edit.
+True 90° top-down. Hero: [HERO_PRODUCT]. Direct on-camera flash only. NOT a redesign.
+
+CAMERA LOCK
+- True 90° overhead / No tilt / No perspective distortion / No re-framing
+
+HARD FLASH LIGHTING
+- Single flash from camera axis / Flash dominates ambient
+- Strong specular highlights on oily/glossy surfaces (sauce, fat, ceramic, metal)
+- Hard-edged shadows beneath objects, tight shadow footprint
+- Realistic flash fall-off (centre brighter → edges drop naturally)
+- No softbox / No bounce fill / No moody lighting / No fake vignette
+
+HERO IDENTITY LOCK — [HERO_PRODUCT]
+- No changes to shape, size, texture, sauce, garnish, char, or edges
+- No cleaning, beautifying, or improving
+- All other items also remain 100% unchanged / No moving or restyling
+
+SCENE LOCK
+- Do NOT change table/background, surface, or props
+- Do NOT remove mess, grease, crumbs, scratches, or wear
+
+DEPTH + SHARPNESS
+- Hero razor-sharp / Even sharpness across full plate (menu clarity)
+- No blur planes / No portrait-mode blur / No masking halos
+
+OPTICAL REALISM
+- True-to-life colour / Natural sensor contrast / Clean highlight roll-off
+- No object changes / No AI-fill / No cloning / No HDR / No stylisation` + CONSISTENCY_BOOST,
+      },
+      {
+        id: "fl-product", title: "PRODUCT SPECIFIC", subtitle: "Hero isolation with hard flash", tag: "Single item",
+        hasHero: true, heroLabel: "Hero Subject", heroPlaceholder: "e.g. Cocktail, Wagyu steak...",
+        description: "Isolates a single hero from a busy scene by cropping only. Hard flash applied to the remaining subject.",
+        prompt: `DSLR PRODUCT SPECIFIC — HARD FLASH
+Rework the uploaded image isolating [HERO_PRODUCT] from a multi-item scene.
+Remove all non-hero items. Flash + lens + sensor rendering ONLY — NOT a redesign.
+
+HERO IDENTITY LOCK — [HERO_PRODUCT]
+- Must already exist in the original image — do NOT invent or recreate
+- No changes to position, orientation, shape, size, or scale
+- No changes to texture, moisture, sauce, garnish, crumbs, or edges
+- No cleaning, beautifying, or improving
+
+NON-HERO REMOVAL (CONTROLLED)
+- Remove all other items cleanly — no artifacts, shadows, or ghosting
+- Do NOT clone or invent background / Reconstruct only what physically exists behind removed items
+- Final background must look naturally photographed, not AI-filled
+
+HARD FLASH LIGHTING
+- Direct on-camera flash from lens position
+- Strong specular highlights on [HERO_PRODUCT]
+- Hard-edged directional shadows / Realistic hotspot with natural fall-off
+- No softbox / No bounce flash / No cinematic lighting
+
+BACKGROUND + DOF
+- Preserve original surface / Minimal reconstruction only if needed
+- [HERO_PRODUCT] tack-sharp / Background natural optical fall-off
+- No portrait-mode blur / No cut-out masking / No haloing
+
+OPTICAL REALISM
+- True-to-life colour / Natural sensor contrast / Clean highlight roll-off
+- No HDR / No fake clarity / No plastic textures / No stylisation` + CONSISTENCY_BOOST,
+      },
+      {
+        id: "fl-shallow", title: "SHALLOW DEPTH", subtitle: "Hero sharp, scene stays visible", tag: "Bokeh focus",
+        hasHero: true, heroLabel: "Hero Product / Dish", heroPlaceholder: "e.g. Pasta dish, Cocktail...",
+        description: "Hero is the only tack-sharp element. All other elements stay visible but naturally out of focus. Hard flash applied throughout.",
+        prompt: `DSLR HARD FLASH — SHALLOW DEPTH
+Rework the uploaded image into a DSLR hard flash optical realism edit.
+[HERO_PRODUCT] is the only tack-sharp element. All other elements stay visible but naturally out of focus. NOT a redesign — no removal.
+
+SCENE LOCK (ABSOLUTE)
+- Entire original scene remains present — plates, food, drinks, tableware, surfaces
+- Do NOT remove, rearrange, crop, or restyle anything
+- Everything reads as one continuous real photograph
+
+HERO IDENTITY — [HERO_PRODUCT]
+- No changes to shape, size, texture, moisture, oil sheen, crumbs, or edges
+- No colour shifts, smoothing, beautifying, or "improving"
+- No added or removed ingredients, liquid, or garnish
+
+DEPTH OF FIELD
+- Full-frame DSLR fast prime look (f/1.8–f/2.8)
+- [HERO_PRODUCT] tack-sharp / All other elements fall out of focus by real depth
+- Optical bokeh only / No masking halos / No pasted blur / No depth flattening
+
+HARD FLASH LIGHTING
+- Single on-camera flash / Flash dominates ambient light
+- Crisp specular highlights on [HERO_PRODUCT] and surrounding surfaces
+- Hard-edged directional shadows matching flash position
+- No softbox / No bounce flash / No fill / No cinematic lighting
+
+OPTICAL REALISM
+- True-to-life colour / Natural sensor contrast / Clean highlight roll-off
+- No HDR / No fake clarity / No plastic textures / No stylisation` + CONSISTENCY_BOOST,
+      },
+      {
+        id: "fl-macro", title: "TIGHT MACRO", subtitle: "Extreme close-up, micro detail", tag: "100mm macro",
+        hasHero: true, heroLabel: "Main Subject / Texture", heroPlaceholder: "e.g. Wagyu marble, Bread crust...",
+        description: "Super tight macro crop so the hero texture fills the frame. Hard flash creates crisp specular on every surface detail.",
+        prompt: `DSLR SUPER TIGHT MACRO — HARD FLASH
+Rework the uploaded image into a DSLR SUPER TIGHT MACRO hard-flash optical realism edit.
+Macro crop + flash lighting + lens + sensor rendering ONLY — NOT a redesign.
+
+MACRO CROP (NON-NEGOTIABLE)
+- Crop aggressively so [HERO_PRODUCT] fills the frame
+- Remove distractions by cropping only — no object removal / no AI fill
+- Feels like a real 100mm macro shot (not digitally zoomed)
+- Show: surface pores, oil sheen, crisp edges, salt granules, bubbles, moisture/glaze
+
+MACRO OPTICS
+- Razor-sharp on main texture plane / Very shallow DOF
+- Background falls into creamy optical bokeh (true lens blur only)
+- DOF fall-off: sharp → soft → blur based on depth
+- No cutout blur / No masking halos
+
+HARD FLASH LIGHTING
+- Flash from lens position / Strong specular on glossy/wet/oily textures
+- Hard-edged deep shadows, short length / Realistic flash fall-off
+- Very bright near focus area → darker background naturally
+- No bloom haze / No fake vignette / No studio softness
+
+SUBJECT LOCK
+- Do NOT change subject, texture, sauce, crumbs, char, gloss level
+- Do NOT add/remove garnish / Do NOT smooth or beautify
+- Do NOT redesign, restyle, add steam/drips, or remove mess
+
+OPTICAL REALISM
+- Clean DSLR rendering / True-to-life colour / Natural contrast
+- No HDR / No heavy grade / No portrait-mode blur` + CONSISTENCY_BOOST,
+      },
+      {
+        id: "fl-environment", title: "ENVIRONMENT", subtitle: "Venue & interior shots", tag: "⚠ Faces: 1–2 only",
+        hasHero: false,
+        description: "Full venue / interior shot with hard flash applied from camera position. Best with people in background or facing away.",
+        prompt: `ENVIRONMENT — ON-CAMERA HARD FLASH
+Apply direct on-camera hard flash to the uploaded image from the exact camera/lens position.
+Lighting-only optical realism edit — NOT a redesign, retouch, or cleanup.
+
+SCENE LOCK (ABSOLUTE — ZERO TOLERANCE)
+Scene must remain pixel-identical. Do NOT change:
+- Location, venue, architecture, walls, ceilings, windows
+- Furniture, bars, tables, stools, shelving
+- Plates, glassware, bottles, cutlery, napkins
+- Crumbs, spills, stains, fingerprints, imperfections
+- People, clothing, poses, expressions, positions
+- Camera angle, framing, crop, or perspective
+Only allowed change: how existing surfaces respond to flash light.
+
+HARD FLASH LIGHTING (ONLY ALLOWED CHANGE)
+Flash origin: same point as camera lens — no offset, no side light.
+- Single point-source flash / No diffusion / No bounce
+- Flash dominates all ambient light
+- Rapid physical fall-off with distance from camera
+Shadow behaviour: hard-edged only, short near-axis lengths, directly behind objects
+Surface response: strong specular on glass, metal, ceramics, oily/wet surfaces
+
+COLOUR + EXPOSURE
+- Neutral flash white balance / Natural camera-real contrast
+- Clean highlight roll-off / No blown whites
+
+HARD FAIL CONDITIONS — ABSOLUTELY NOT
+No soft light / No bounce / No ambient glow / No fill / No softboxes
+No haze, bloom, or diffusion / No cinematic grading / No fake vignette` + CONSISTENCY_BOOST,
+      },
+      {
+        id: "fl-menu-flatlay", title: "MENU FLATLAY", subtitle: "90° overhead single plate", tag: "Menu ready",
+        hasHero: true, heroLabel: "Main Product", heroPlaceholder: "e.g. Wagyu, Octopus dish...",
+        description: "Clean menu-ready overhead flatlay for a single product. Hard flash creates sharp shadow footprint under the plate.",
+        prompt: `HARD FLASH MENU-READY OVERHEAD FLATLAY
+Rework the uploaded image into a MENU-READY DSLR HARD FLASH flatlay for [HERO_PRODUCT] ONLY.
+- True 90° top-down overhead (menu style)
+- Direct hard flash lighting (on-camera / paparazzi)
+- Crisp specular highlights, sharp shadow edges, realistic flash fall-off
+- Crop tightly — ONLY the plate visible (crop only, no object removal)
+- Plate centred, square, and level / Keep original table/background (NO cutout)
+- No background blur — full menu clarity / True-to-life colour, no heavy grading
+- Hard flash optical realism edit only — NOT a redesign
+
+SCENE + PLATE LOCK
+- Do NOT change table/background, texture, grain, tone, or imperfections
+- Do NOT cut out or place plate on studio/white background
+- Do NOT relight beyond hard flash / Do NOT change colour temperature
+- Do NOT change product, plate, shape, size, colour, texture, or details
+- Do NOT add/remove oil, crumbs, garnish, liquid, or sauce
+- Do NOT tidy, clean up, restyle, or improve presentation
+
+CROP ONLY — NO AI FIXING
+Remove unwanted elements by cropping only — NO object removal / NO AI-fill / NO cloning
+
+NO AI LOOK
+No stylising / No HDR / No heavy contrast / No plastic shine / No masking artefacts
+
+ONLY ALLOWED
+Hard flash lighting / Overhead perspective correction / DSLR sensor rendering
+Even sharpness across full plate (menu clarity — no shallow DOF)` + CONSISTENCY_BOOST,
+      },
+      {
+        id: "fl-menu-side", title: "MENU SIDE PROFILE", subtitle: "Straight-on side view", tag: "Menu ready",
+        hasHero: true, heroLabel: "Hero Subject", heroPlaceholder: "e.g. Cocktail, Burger, Wine...",
+        description: "True straight-on side profile with hard flash. Perfect for drinks, tall subjects, and layered dishes.",
+        prompt: `HARD FLASH MENU-READY SIDE PROFILE
+Rework the uploaded image into a MENU-READY DSLR HARD FLASH side profile shot for [HERO_PRODUCT] ONLY.
+- True straight-on side profile, vertical lines corrected (no leaning/tilt)
+- Direct hard flash (on-camera / paparazzi)
+- Crisp specular highlights, sharp shadow edges, realistic flash fall-off
+- Crop tightly — hero + plate/container only (crop only, no object removal)
+- Subject centred, level, upright / Keep original table/background (NO cutout)
+- No background blur — menu clarity required / True-to-life colour, no heavy grading
+- Hard flash optical realism edit only — NOT a redesign
+
+SCENE + SUBJECT LOCK
+- Do NOT change environment, background, surface, table, or setting
+- Do NOT cut out subject or place on studio/white background
+- Do NOT relight beyond hard flash / Do NOT change colour temperature
+- Do NOT change hero subject (shape, size, texture, colour, ingredients, or garnish)
+- Do NOT tidy, restyle, or beautify / Remove elements by cropping ONLY
+
+NO AI LOOK
+No stylising / No CGI / No HDR / No plastic shine / No masking artefacts / No blur
+
+ONLY ALLOWED
+Hard flash lighting / Straight-on geometry correction / DSLR sensor rendering
+Clean menu clarity across hero subject` + CONSISTENCY_BOOST,
+      },
+      {
+        id: "fl-menu-45", title: "MENU 45°", subtitle: "3/4 angle view", tag: "Menu ready",
+        hasHero: true, heroLabel: "Hero Subject", heroPlaceholder: "e.g. Focaccia, Dessert...",
+        description: "Classic 3/4 menu angle with hard flash. Shows height and texture. Crop only — no AI fill.",
+        prompt: `HARD FLASH MENU-READY 45° ANGLE
+Rework the uploaded image into a MENU-READY DSLR HARD FLASH 45° shot for [HERO_PRODUCT] ONLY.
+- True 45° / 3/4 menu angle (not overhead, not side-on)
+- Direct hard flash (on-camera / paparazzi)
+- Crisp specular highlights, sharp shadow edges, realistic flash fall-off
+- Crop tightly — hero + plate/container only (crop only, no object removal)
+- Subject centred and cleanly framed / Keep original table/background (NO cutout)
+- No background blur — menu clarity required / True-to-life colour, no heavy grading
+- Hard flash optical realism edit only — NOT a redesign
+
+SCENE + SUBJECT LOCK
+- Do NOT change environment, background, surface, table, or setting
+- Do NOT cut out subject or place on studio/white background
+- Do NOT relight beyond hard flash / Do NOT change colour temperature
+- Do NOT change hero subject (shape, size, texture, colour, ingredients, or garnish)
+- Do NOT tidy, restyle, or beautify / Remove elements by cropping ONLY
+
+NO AI LOOK
+No stylising / No CGI / No HDR / No plastic shine / No masking artefacts / No blur
+
+ONLY ALLOWED
+Hard flash lighting / True 45° perspective correction / DSLR sensor rendering
+Clean menu clarity across hero subject` + CONSISTENCY_BOOST,
+      },
+    ],
+  },
+
+  hotel: {
+    subtitle: "Hotel Pack",
+    promptsTitle: "Hotel Prompts",
+    steps: [
+      { num: "01", title: "Take Your Photo",  text: "Shoot your room, venue, or F&B photo. JPEG recommended." },
+      { num: "02", title: "Open ChatGPT",     text: "Upload your image directly into the ChatGPT chat window." },
+      { num: "03", title: "Copy a Prompt",    text: "Select a prompt type, fill in any fields, then copy and paste." },
+      { num: "04", title: "Export",           text: "Select your export format above — it's automatically added to every prompt." },
+    ],
+    prompts: [
+      {
+        id: "ht-basic", title: "BASIC PROMPT", subtitle: "The reusable foundation", tag: "Start here",
+        hasHero: false,
+        description: "The reusable foundation for any hotel photo. Start here every time, then layer on specific prompt types for different variations.",
+        prompt: `Rework the uploaded image into a professional DSLR editorial interior photograph suitable for hotel websites and interior magazines.
+
+The result should feel brighter, lighter, and more open while remaining natural and true to the existing lighting conditions — as if captured by a professional interior photographer using optimal exposure and sensor latitude.
+
+Maintain a clean, calm, balanced editorial look with soft lifted midtones, gentle highlight roll-off, and natural shadow detail.
+
+Prioritise natural, accurate focus and realistic depth rendering across the scene.
+
+Apply subtle, true-to-life lens behaviour and authentic sensor rendering only.
+
+The space must remain 100% identical — no changes to objects, furniture, décor, people, or environment.
+
+This is an editorial optical realism edit only (lens + sensor rendering), not a redesign.
+
+NEGATIVE PROMPT (NON-NEGOTIABLE LOCKS)
+
+ENVIRONMENT + SCENE LOCK (CRITICAL)
+Do NOT change the environment, location, background, surfaces, or setting
+Do NOT replace interiors, furniture, décor, fixtures, finishes, or props
+Do NOT change lighting direction, time-of-day feel, ambience, or mood
+Do NOT change colour temperature or the natural light character of the space
+Do NOT remove real mess, clutter, wear, patina, or imperfections
+
+SUBJECT IDENTITY LOCK
+Do NOT change the main subject in any way
+Do NOT alter shape, size, proportions, scale, angle, or placement
+Do NOT change colour, texture, materials, finishes, branding, labels, logos, or typography
+Do NOT "perfect," tidy, restyle, or beautify
+
+NO OBJECT CHANGES
+Do NOT add or remove objects, people, reflections, or background elements
+Do NOT invent new details
+Do NOT clone, patch, erase, fill, or regenerate any areas
+
+NO RETOUCH / NO AI LOOK
+No stylising, cinematic grading, or creative filters
+No CGI, 3D-render, illustration, or artificial design look
+No smoothing, reshaping, symmetry correction, or surface polishing
+No HDR, heavy contrast, or oversaturated colour
+
+ONLY ALLOWED CHANGES
+Lens optics only (true depth, focal behaviour, natural bokeh where physically accurate)
+Sensor rendering only (slightly higher exposure, lifted midtones, natural highlight roll-off, preserved shadow detail, tonal subtlety)`,
+      },
+      {
+        id: "ht-rooms", title: "FULL ROOM HEROS", subtitle: "Wide-angle room & suite shots", tag: "18–24mm",
+        hasHero: false,
+        description: "Wide-angle hero shots of complete rooms — bedrooms, suites, dining rooms. Simulates an 18–24mm lens with true architectural perspective.",
+        prompt: `Rework the uploaded image into a professional DSLR editorial interior photograph suitable for hotel websites and interior magazines.
+
+Simulate a natural wide-angle interior lens (approximately 18–24mm full-frame equivalent) with true architectural perspective.
+
+Maintain straight verticals, accurate proportions, and realistic spatial depth, as captured by a professional interior photographer.
+
+Apply brighter, lighter, softly balanced editorial lighting that remains natural and true to the existing ambient and window light — as if optimally exposed with professional sensor latitude.
+
+Maintain a clean, calm, balanced editorial look with soft lifted midtones, gentle highlight roll-off, and preserved shadow detail.
+
+The room must remain 100% identical to the original image.
+
+This is an editorial optical realism edit only (lens + sensor rendering), not a redesign.
+
+NEGATIVE PROMPT (NON-NEGOTIABLE LOCKS)
+
+ENVIRONMENT + SCENE LOCK (CRITICAL)
+Do NOT change room layout, furniture placement, bedding, artwork, or décor
+Do NOT clean, tidy, stage, or restyle the room
+Do NOT alter window views, exterior scenery, or reflections
+Do NOT change lighting direction, time-of-day feel, or natural light character
+Do NOT dramatise lighting, deepen shadows, or introduce mood lighting
+
+SUBJECT IDENTITY LOCK
+Do NOT alter room scale, dimensions, or perspective
+Do NOT change wall, floor, or ceiling colours, materials, or finishes
+
+NO OBJECT CHANGES
+Do NOT add or remove lamps, cushions, throws, props, or styling elements
+Do NOT invent or remove any details
+
+NO RETOUCH / NO AI LOOK
+No ultra-wide distortion or perspective exaggeration
+No cinematic, moody, or stylised lighting
+No HDR, heavy contrast, or oversaturated colour
+
+ONLY ALLOWED CHANGES
+Lens optics only (true wide-angle focal behaviour, realistic depth and perspective)
+Sensor rendering only (slightly higher exposure, lifted midtones, natural highlight roll-off, preserved shadow detail, tonal subtlety)`,
+      },
+      {
+        id: "ht-foyer", title: "FOYER & PUBLIC SPACE", subtitle: "Lobbies, corridors, architecture", tag: "18–28mm",
+        hasHero: false,
+        description: "Lobbies, corridors, and architectural spaces. Preserves ceiling height, vertical alignment, and spatial flow.",
+        prompt: `Rework the uploaded image into a professional DSLR editorial architectural interior photograph suitable for hotel websites and interior magazines.
+
+Use a clean wide architectural lens rendering (approximately 18–28mm full-frame equivalent).
+
+Preserve true scale, ceiling height, vertical alignment, and natural spatial flow.
+
+Apply brighter, lighter, softly balanced editorial lighting that remains natural and true to the existing ambient and available light — as if optimally exposed with professional sensor latitude.
+
+Maintain a clean, calm, balanced editorial look with soft lifted midtones, gentle highlight roll-off, and preserved shadow detail.
+
+This is an editorial optical realism edit only (lens + sensor rendering), not a redesign.
+
+The space must remain 100% identical to the original image.
+
+NEGATIVE PROMPT (NON-NEGOTIABLE LOCKS)
+
+ENVIRONMENT + SCENE LOCK (CRITICAL)
+Do NOT alter architectural features, structures, surfaces, or finishes
+Do NOT remove reflections from glass, stone, metal, or polished materials
+Do NOT add people or remove existing ones
+Do NOT change lighting direction, time-of-day feel, or natural light character
+
+SUBJECT IDENTITY LOCK
+Do NOT change proportions, angles, scale, or structural geometry
+
+NO OBJECT CHANGES
+Do NOT move furniture, plants, signage, or fixtures
+
+NO RETOUCH / NO AI LOOK
+No dramatic lighting / No stylised architecture look
+No cinematic grading or creative filters
+No HDR, heavy contrast, or oversaturated colour
+
+ONLY ALLOWED CHANGES
+Lens optics only (true wide-angle focal behaviour, realistic perspective)
+Sensor rendering only (slightly higher exposure, lifted midtones, natural highlight roll-off, preserved shadow detail, tonal subtlety)`,
+      },
+      {
+        id: "ht-events", title: "EVENT & CONFERENCE", subtitle: "Conferencing & event spaces", tag: "Banquets",
+        hasHero: false,
+        description: "Conference rooms, meeting spaces, and event setups. Maintains original layout and configuration.",
+        prompt: `Rework the uploaded image into a professional DSLR editorial event space photograph suitable for hotel websites and event marketing.
+
+Maintain the original seating layout, table arrangement, and room configuration.
+
+Apply brighter, lighter, softly balanced editorial lighting that remains natural and true to the existing ambient and available light — as if optimally exposed with professional sensor latitude.
+
+Maintain a clean, calm, balanced editorial look with soft lifted midtones, gentle highlight roll-off, and preserved shadow detail.
+
+The scene must remain 100% identical to the original image.
+
+This is an editorial optical realism edit only (lens + sensor rendering), not a redesign.
+
+NEGATIVE PROMPT (NON-NEGOTIABLE LOCKS)
+
+ENVIRONMENT + SCENE LOCK (CRITICAL)
+Do NOT rearrange tables, chairs, staging, or AV equipment
+Do NOT add florals, décor, or styling
+Do NOT change lighting direction, time-of-day feel, or natural light character
+
+SUBJECT IDENTITY LOCK
+Do NOT alter room capacity, proportions, scale, or layout
+
+NO OBJECT CHANGES
+Do NOT add or remove place settings, signage, or accessories
+
+NO RETOUCH / NO AI LOOK
+No spotlighting / No dramatic contrast
+No cinematic, moody, or stylised lighting
+No HDR, heavy contrast, or oversaturated colour
+
+ONLY ALLOWED CHANGES
+Lens optics only (true focal behaviour, realistic depth and perspective)
+Sensor rendering only (slightly higher exposure, lifted midtones, natural highlight roll-off, preserved shadow detail, tonal subtlety)`,
+      },
+      {
+        id: "ht-outdoor", title: "POOLS, SPAS & OUTDOOR", subtitle: "Pools, spa gardens, terraces", tag: "Daylight",
+        hasHero: false,
+        description: "Pools, spas, courtyards, and outdoor areas. Preserves real daylight conditions without tropical exaggeration.",
+        prompt: `Rework the uploaded image into a professional DSLR editorial outdoor hospitality photograph suitable for hotel websites and lifestyle marketing.
+
+Preserve real daylight conditions, natural reflections, and the authentic outdoor atmosphere.
+
+Apply brighter, lighter, softly balanced editorial exposure that remains true to the existing daylight — as if optimally exposed with professional sensor latitude.
+
+Maintain a clean, calm, balanced editorial look with soft lifted midtones, gentle highlight roll-off, and preserved shadow detail.
+
+The scene must remain 100% identical to the original image.
+
+This is an editorial optical realism edit only (lens + sensor rendering), not a redesign.
+
+NEGATIVE PROMPT (NON-NEGOTIABLE LOCKS)
+
+ENVIRONMENT + SCENE LOCK (CRITICAL)
+Do NOT replace sky or alter weather conditions
+Do NOT recolour water, foliage, or landscape elements
+Do NOT change lighting direction, time-of-day feel, or natural daylight character
+
+NO OBJECT CHANGES
+Do NOT add or remove people, loungers, umbrellas, or furniture
+
+NO RETOUCH / NO AI LOOK
+No saturation boost / No tropical exaggeration
+No cinematic, stylised, or dramatic lighting
+No HDR, heavy contrast, or oversaturated colour
+
+ONLY ALLOWED CHANGES
+Lens optics only (true focal behaviour, realistic depth and perspective)
+Sensor rendering only (slightly higher exposure, lifted midtones, natural highlight roll-off, preserved shadow detail, tonal subtlety)`,
+      },
+      {
+        id: "ht-venue-macro", title: "TIGHT MACRO — VENUE", subtitle: "Surface & material close-ups", tag: "Fill in",
+        hasHero: true, heroLabel: "Focus Area", heroPlaceholder: 'e.g. "the stone tabletop near the front edge"',
+        description: "Super-tight macro crop of a specific surface or material. Describe the precise area you want to focus on.",
+        prompt: `SELECTIVE DSLR MACRO CROP — ENVIRONMENT AGNOSTIC
+
+Rework the uploaded image into a super-tight DSLR macro crop using ONLY a literal crop from the original photograph.
+
+This is a crop-only operation — not a re-shoot, not a redesign, not a reinterpretation.
+
+FOCUS AREA (MANDATORY):
+[HERO_PRODUCT]
+
+AREA RULES — the selected area must:
+- Exist exactly as photographed
+- Be one continuous, real surface
+- Fill the frame edge-to-edge after cropping
+
+Do NOT expand the scene / Do NOT include adjacent objects / Do NOT invent framing
+
+LENS + SENSOR SIMULATION (LOCKED)
+Simulate an 85–100mm full-frame macro lens
+True optical lens + sensor rendering only
+No computational photography / No focus stacking
+
+DEPTH OF FIELD (PHYSICAL CONSTRAINT)
+Depth of field must be physically correct for macro distance
+Natural optical falloff only / No artificial blur
+
+MATERIAL + REALISM LOCKS (ZERO TOLERANCE)
+Materials must remain IDENTICAL to the source photo
+Do NOT clean, beautify, enhance texture, correct colour, or adjust exposure
+
+ABSOLUTE PROHIBITIONS
+Do NOT add or remove anything
+Do NOT restage, stylise, or narrativise
+Do NOT introduce props, food, hands, or context
+
+OUTPUT CONSTRAINTS
+Portrait orientation / Frame filled entirely by the cropped material
+Must look like: "A RAW photo cropped tighter in Lightroom"`,
+      },
+      {
+        id: "ht-fnb", title: "FOOD & BEVERAGES", subtitle: "Editorial F&B photography", tag: "F&B",
+        hasHero: false,
+        description: "Editorial food and beverage photography. Prioritises accurate focus and true-to-life food colour.",
+        prompt: `Rework the uploaded image into a professional DSLR editorial food and beverage photograph.
+
+Prioritise accurate focus and true-to-life food colour.
+
+Apply soft, controlled editorial food lighting.
+
+Food and beverages must remain 100% identical.
+
+This is an optical realism edit only (lens + sensor rendering), not a redesign.
+
+NEGATIVE PROMPT (NON-NEGOTIABLE LOCKS)
+
+FOOD IDENTITY LOCK (CRITICAL)
+Do NOT change ingredients, garnish, portions, or plating
+Do NOT tidy, beautify, or perfect
+
+NO OBJECT CHANGES
+Do NOT add or remove plates, glassware, or cutlery
+
+NO RETOUCH / NO AI LOOK
+No saturation push / No fake steam or gloss
+
+ONLY ALLOWED CHANGES
+Lens optics only
+Sensor rendering only`,
+      },
+      {
+        id: "ht-fnb-macro", title: "TIGHT MACRO — FOOD", subtitle: "Food texture close-up", tag: "85–100mm",
+        hasHero: false,
+        description: "Super-tight macro crop that fills the frame with food texture. Simulates an 85–100mm macro lens with very shallow natural depth of field.",
+        prompt: `Rework the uploaded image into a professional DSLR super-tight editorial macro food photograph.
+
+Simulate an 85–100mm macro lens.
+
+Crop aggressively so texture fills the frame.
+
+Apply very shallow, natural optical depth of field.
+
+This is an optical realism edit only (lens + sensor rendering), not a redesign.
+
+NEGATIVE PROMPT (NON-NEGOTIABLE LOCKS)
+
+FOOD IDENTITY LOCK (CRITICAL)
+Do NOT alter texture, colour, moisture, or structure
+
+NO OBJECT CHANGES
+Do NOT add garnish or remove crumbs
+
+NO RETOUCH / NO AI LOOK
+No smoothing / No fake shine
+
+ONLY ALLOWED CHANGES
+Lens optics only
+Sensor rendering only`,
+      },
+      {
+        id: "ht-menu-45", title: "MENU 45°", subtitle: "Clean menu-ready 3/4 angle", tag: "Fill in",
+        hasHero: true, heroLabel: "Hero Subject", heroPlaceholder: 'e.g. "the beef tartare" or "the espresso martini"',
+        description: "Clean menu-ready 45° (3/4 angle) shot of a specific hero subject. Crops and reframes around that subject only.",
+        prompt: `Rework the uploaded image into a clean MENU-READY DSLR 45° (3/4 angle) shot for [HERO_PRODUCT] ONLY.
+
+Convert the camera angle into a true 45° / 3/4 menu angle (not overhead, not side-on).
+
+Apply subtle perspective correction so the subject feels naturally shot at 45° (no distortion).
+
+Crop tightly so ONLY the hero subject + its plate/container are visible — remove everything else ONLY by cropping (no object removal).
+
+Keep the hero subject centred, level, and cleanly framed.
+
+The subject must remain on the exact same original table/background (NO cutout, NO studio/white backdrop).
+
+No heavy background blur — menu clarity required (subtle natural separation only).
+
+This is an optical realism edit only (lens + sensor rendering), not a redesign.
+
+NEGATIVE PROMPT
+
+ENVIRONMENT + SCENE LOCK (CRITICAL)
+Do NOT change the environment, location, background, surfaces, or setting
+Do NOT replace the table/background — must remain the original surface
+Do NOT cut out the subject or place it on a studio/white background
+Do NOT change lighting direction, time-of-day feel, ambience, or mood
+
+SUBJECT IDENTITY LOCK
+Do NOT change the hero subject in any way
+Do NOT alter shape, size, proportions, scale, angle, or placement
+Do NOT change colour, texture, material, branding, labels, logos, or typography
+Do NOT add/remove ingredients, components, garnish, crumbs, liquid, steam, etc.
+Do NOT "perfect," tidy, restyle, or beautify the subject
+
+NO OBJECT CHANGES
+Remove unwanted elements ONLY by cropping them out
+Do NOT AI-fill or regenerate missing areas
+
+NO RETOUCH / NO AI LOOK
+No stylising / No CGI / No HDR / No heavy contrast / No fake shine
+
+NO FAKE DEPTH OF FIELD
+No cut-out edges / No masking artefacts / No haloing
+No background blur (menu clarity required)
+
+ONLY ALLOWED CHANGES
+Lens optics only (true 45° perspective correction, natural geometry)
+Sensor rendering only (dynamic range, highlight roll-off, tonal subtlety, clean detail)
+Clean menu clarity across the hero subject
+Everything else must remain identical to the original image`,
+      },
+    ],
+  },
+};
+
+// ─── STATE ────────────────────────────────────────────────────────────────────
+let currentPack = 'natural';
+let currentExport = 'instagram';
+
+// ─── HELPERS ─────────────────────────────────────────────────────────────────
+function buildExportText(key) {
+  const text = EXPORT_PROMPTS[currentPack][key];
+  return text ? `\n\nEXPORT PROMPT\n${text}` : '';
+}
+
+function getFinalPrompt(promptObj, cardEl) {
+  let text = promptObj.prompt;
+  if (promptObj.hasHero) {
+    const input = cardEl.querySelector('.hero-input');
+    const val = input && input.value.trim() ? input.value.trim() : (promptObj.heroPlaceholder || 'YOUR PRODUCT');
+    text = text.replaceAll('[HERO_PRODUCT]', val).replaceAll('[HERO_SUBJECT]', val).replaceAll('[FOCUS_AREA]', val);
+  }
+  text += buildExportText(currentExport);
+  return text;
+}
+
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2200);
+}
+
+// ─── RENDER ───────────────────────────────────────────────────────────────────
+function renderPack() {
+  const pack = PACKS[currentPack];
+
+  document.getElementById('headerSubtitle').textContent = pack.subtitle;
+  document.getElementById('promptsTitle').textContent = pack.promptsTitle;
+
+  document.getElementById('howItWorks').innerHTML = pack.steps.map(s => `
+    <div class="step">
+      <div class="step-num">${s.num}</div>
+      <div class="step-title">${s.title}</div>
+      <div class="step-text">${s.text}</div>
+    </div>
+  `).join('');
+
+  const grid = document.getElementById('promptGrid');
+  grid.innerHTML = '';
+
+  pack.prompts.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'prompt-card';
+    card.id = 'card-' + p.id;
+
+    card.innerHTML = `
+      <div class="card-header">
+        <div>
+          <div class="card-title">${p.title}</div>
+          <div class="card-subtitle">${p.subtitle}</div>
+        </div>
+        <div class="card-tag">${p.tag}</div>
+      </div>
+      <div class="card-body">
+        <div class="prompt-preview">${p.description}</div>
+        ${p.hasHero ? `
+        <div class="hero-input-wrap">
+          <label class="hero-input-label">→ Replace [${p.heroLabel}]</label>
+          <input class="hero-input" type="text" placeholder="${p.heroPlaceholder}" />
+        </div>` : ''}
+        <button class="copy-btn" data-id="${p.id}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span>Copy Full Prompt</span>
+        </button>
+      </div>
+      <button class="expand-btn" data-id="${p.id}">
+        Preview prompt
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="full-prompt" id="preview-${p.id}"></div>
+    `;
+
+    grid.appendChild(card);
+  });
+
+  document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.dataset.id;
+      const p = PACKS[currentPack].prompts.find(x => x.id === id);
+      const card = document.getElementById('card-' + id);
+      const text = getFinalPrompt(p, card);
+      navigator.clipboard.writeText(text).then(() => {
+        const span = btn.querySelector('span');
+        btn.classList.add('copied');
+        span.textContent = '✓ Copied!';
+        showToast('Prompt copied — paste into ChatGPT');
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          span.textContent = 'Copy Full Prompt';
+        }, 2500);
+      });
+    });
+  });
+
+  document.querySelectorAll('.expand-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.dataset.id;
+      const preview = document.getElementById('preview-' + id);
+      const p = PACKS[currentPack].prompts.find(x => x.id === id);
+      const card = document.getElementById('card-' + id);
+      if (preview.style.display === 'block') {
+        preview.style.display = 'none';
+        btn.classList.remove('open');
+        btn.childNodes[0].textContent = 'Preview prompt ';
+      } else {
+        preview.textContent = getFinalPrompt(p, card);
+        preview.style.display = 'block';
+        btn.classList.add('open');
+        btn.childNodes[0].textContent = 'Hide prompt ';
+      }
+    });
+  });
+}
+
+// ─── PACK SWITCH ──────────────────────────────────────────────────────────────
+function switchPack(pack) {
+  currentPack = pack;
+  document.querySelectorAll('.pack-tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.pack === pack);
+  });
+  renderPack();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ─── EXPORT ───────────────────────────────────────────────────────────────────
+document.querySelectorAll('.export-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.export-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentExport = btn.dataset.export;
+    document.querySelectorAll('.full-prompt').forEach(prev => {
+      if (prev.style.display === 'block') {
+        const id = prev.id.replace('preview-', '');
+        const p = PACKS[currentPack].prompts.find(x => x.id === id);
+        const card = document.getElementById('card-' + id);
+        prev.textContent = getFinalPrompt(p, card);
+      }
+    });
+  });
+});
+
+renderPack();
+</script>
+</body>
+</html>
